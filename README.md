@@ -80,8 +80,50 @@ Each skill is a standalone markdown file in `skills/<topic>/SKILL.md`. You can:
 1. **Reference directly** — point your LLM at a specific skill file when working on that topic
 2. **Include in system prompts** — paste skill content into your LLM's context for domain expertise
 3. **Use with MCP** — skills teach the LLM which MCP tools to call and in what order
+4. **Install as Claude Code commands** — see below
 
 Skills include a YAML frontmatter block with trigger conditions — use these to build automatic skill selection in your toolchain.
+
+## Claude Code slash commands
+
+This repo includes pre-built slash commands in `.claude/commands/`. After cloning, you get commands like `/eddytor-getting-started`, `/eddytor-querying`, etc.
+
+**Install into your project:**
+
+```bash
+# Clone the repo
+git clone https://github.com/eddytor-labs/eddytor-skills.git
+
+# Symlink commands into your project
+mkdir -p .claude/commands
+for f in eddytor-skills/.claude/commands/*.md; do
+  ln -s "$(pwd)/$f" .claude/commands/
+done
+```
+
+**Or install globally** (available in all projects):
+
+```bash
+mkdir -p ~/.claude/commands
+for f in eddytor-skills/.claude/commands/*.md; do
+  ln -s "$(pwd)/$f" ~/.claude/commands/
+done
+```
+
+Available commands:
+
+| Command | Description |
+| --- | --- |
+| `/eddytor-getting-started` | Onboarding, MCP setup, first table |
+| `/eddytor-table-management` | Create tables, schema design, column types |
+| `/eddytor-data-import` | CSV import, schema inference |
+| `/eddytor-data-quality` | Constraints, validation, profiling |
+| `/eddytor-querying` | query_rows, aggregate, execute_sql |
+| `/eddytor-domain-hierarchies` | Fixed, hierarchical, reference domains |
+| `/eddytor-version-control` | History, diff, rollback, restore |
+| `/eddytor-bulk-operations` | Merge, batch insert/update/delete |
+| `/eddytor-migration` | From Excel, MDS, SQL databases |
+| `/eddytor-optimization` | Compact, vacuum, performance |
 
 ## MCP tools overview
 
@@ -105,4 +147,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on adding or modifying ski
 
 ## License
 
-This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License with the Commons Clause — free to use, modify, and share, but not to sell. See [LICENSE](LICENSE) for details.
