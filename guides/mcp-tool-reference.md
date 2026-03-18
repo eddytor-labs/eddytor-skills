@@ -1,11 +1,14 @@
-```yaml
+---
 name: eddytor-mcp-tool-reference
 description: >
-  Use this skill when the user needs to look up exact parameters for an Eddytor
-  MCP tool, understand what a tool returns, debug a failing tool call, or wants
-  a complete list of available tools. Also use when the user asks "what tools
-  does Eddytor have?", "what parameters does X take?", or "how do I call X?"
-```
+  Provides a complete catalog of Eddytor's 28 MCP tools with parameter details
+  and universal gotchas. Activates when looking up tool parameters, debugging
+  failing tool calls, or listing available tools.
+license: CC-BY-NC-4.0
+metadata:
+  author: eddytor
+  version: "1.0"
+---
 
 # MCP Tool Reference
 

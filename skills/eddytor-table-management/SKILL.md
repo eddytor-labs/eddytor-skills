@@ -1,12 +1,15 @@
-```yaml
+---
 name: eddytor-table-management
 description: >
-  Use this skill when the user wants to create a new Eddytor table, add or modify
-  columns, change primary keys or uniqueness constraints, rename or move tables, or
-  understand table schemas and data types. Also use when the user mentions "schema
-  design", "column types", "primary key", "add column", or asks what data types
-  Eddytor supports — even if they don't say "table management."
-```
+  Creates and modifies Eddytor tables, columns, primary keys, uniqueness
+  constraints, and schema designs. Activates for table creation, schema design,
+  column types, primary keys, add column, rename or move tables, or data type
+  questions — even without the phrase "table management."
+license: CC-BY-NC-4.0
+metadata:
+  author: eddytor
+  version: "1.0"
+---
 
 # Table Management
 

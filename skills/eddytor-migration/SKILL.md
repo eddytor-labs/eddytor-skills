@@ -1,13 +1,15 @@
-```yaml
+---
 name: eddytor-migration
 description: >
-  Use this skill when the user wants to migrate data into Eddytor from external
-  systems — Excel, Microsoft MDS, SQL databases, or other MDM tools. Also use
-  when the user mentions "migration", "move data from", "replace MDS", "move
-  from Excel", "import from database", "ETL", "switch to Eddytor", or references
-  any source system that needs to feed into Eddytor — even if they don't use
-  the word "migration."
-```
+  Migrates data into Eddytor from Excel, Microsoft MDS, SQL databases, and other
+  MDM tools with schema mapping and validation. Activates for migration, moving
+  data from external systems, replacing MDS, importing from databases, ETL, or
+  switching to Eddytor — even without the word "migration."
+license: CC-BY-NC-4.0
+metadata:
+  author: eddytor
+  version: "1.0"
+---
 
 # Migration to Eddytor
 

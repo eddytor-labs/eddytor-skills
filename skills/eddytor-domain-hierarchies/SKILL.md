@@ -1,13 +1,15 @@
-```yaml
+---
 name: eddytor-domain-hierarchies
 description: >
-  Use this skill when the user wants to set up allowed value lists, create
-  category-subcategory relationships, link columns across tables via reference
-  domains, or manage hierarchical master data structures in Eddytor. Also use
-  when the user mentions "allowed values", "enum", "dropdown", "hierarchy",
-  "parent-child", "lookup", "foreign key", or "domain constraint" — even if
-  they don't explicitly say "domain."
-```
+  Sets up allowed value lists, category-subcategory hierarchies, and cross-table
+  reference domains in Eddytor. Activates for allowed values, enums, dropdowns,
+  hierarchies, parent-child relationships, lookups, foreign keys, or domain
+  constraints — even without the word "domain."
+license: CC-BY-NC-4.0
+metadata:
+  author: eddytor
+  version: "1.0"
+---
 
 # Domain Hierarchies
 

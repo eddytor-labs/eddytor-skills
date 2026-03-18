@@ -1,12 +1,15 @@
-```yaml
+---
 name: eddytor-bulk-operations
 description: >
-  Use this skill when the user wants to insert, update, delete, or upsert
-  multiple rows in Eddytor. Also use when the user mentions "bulk insert",
-  "batch update", "upsert", "merge rows", "mass delete", "sync data",
-  "update records", or any operation involving multiple rows — even if they
-  don't explicitly say "bulk."
-```
+  Inserts, updates, deletes, and upserts multiple rows atomically in Eddytor
+  using merge_rows. Activates for bulk insert, batch update, upsert, merge rows,
+  mass delete, data sync, or any multi-row operation — even without the word
+  "bulk."
+license: CC-BY-NC-4.0
+metadata:
+  author: eddytor
+  version: "1.0"
+---
 
 # Bulk Operations
 

@@ -1,12 +1,15 @@
-```yaml
+---
 name: eddytor-data-import
 description: >
-  Use this skill when the user wants to import CSV data into Eddytor, preview a
-  schema before importing, or migrate spreadsheet data into tables. Also use when
-  the user mentions "CSV import", "load data", "upload data", "infer schema", has
-  raw CSV content, or asks about type detection and delimiter handling — even if
-  they don't explicitly say "import."
-```
+  Imports CSV data into Eddytor tables with schema inference, type mapping, and
+  post-import validation. Activates for CSV import, data loading, schema preview,
+  raw CSV content, type detection, or delimiter handling — even without the word
+  "import."
+license: CC-BY-NC-4.0
+metadata:
+  author: eddytor
+  version: "1.0"
+---
 
 # Data Import
 
