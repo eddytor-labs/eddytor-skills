@@ -39,62 +39,69 @@ eddytor-skills/
     └── skill-manifest.json          # Registry of all skills
 ```
 
-## Quick start
+## Installation
 
-### Claude Desktop / claude.ai
+### Step 1: Connect to Eddytor's MCP endpoint
 
-Add Eddytor as an MCP server in your Claude Desktop config:
+This gives your agent access to Eddytor's 28 MCP tools.
 
-```json
-{
-  "mcpServers": {
-    "eddytor": {
-      "url": "https://mcp.eddytor.com/mcp"
-    }
-  }
-}
-```
-
-### Cursor
-
-Add to `.cursor/mcp.json` in your project:
+**Claude Desktop / claude.ai** — add to your MCP config:
 
 ```json
-{
-  "mcpServers": {
-    "eddytor": {
-      "url": "https://mcp.eddytor.com/mcp"
-    }
-  }
-}
+{ "mcpServers": { "eddytor": { "url": "https://mcp.eddytor.com/mcp" } } }
 ```
 
-### Other providers
+**Cursor** — add to `.cursor/mcp.json`:
 
-See [guides/provider-setup/generic.md](guides/provider-setup/generic.md) for setup instructions with any MCP-compatible client.
+```json
+{ "mcpServers": { "eddytor": { "url": "https://mcp.eddytor.com/mcp" } } }
+```
 
-## How to use skills
+**Claude Code:**
 
-Each skill follows the [Agent Skills specification](https://agentskills.io/specification) — a folder with a `SKILL.md` file containing `---` YAML frontmatter. You can:
+```bash
+claude mcp add eddytor --transport streamable-http https://mcp.eddytor.com/mcp
+```
 
-1. **Reference directly** — point your LLM at a specific skill file when working on that topic
-2. **Include in system prompts** — paste skill content into your LLM's context for domain expertise
-3. **Use with MCP** — skills teach the LLM which MCP tools to call and in what order
-4. **Install as Claude Code commands** — see below
+See [guides/provider-setup/](guides/provider-setup/) for other providers.
 
-Skills include a YAML frontmatter block with trigger conditions — use these to build automatic skill selection in your toolchain.
+### Step 2: Add skills to your project
+
+Skills are auto-discovered by any [Agent Skills-compatible tool](https://agentskills.io). Just add the skill folders to your project and agents find them automatically.
+
+**Option A: Git submodule** (recommended — stays in sync with updates)
+
+```bash
+git submodule add https://github.com/eddytor-labs/eddytor-skills.git eddytor-skills
+```
+
+**Option B: Clone directly**
+
+```bash
+git clone https://github.com/eddytor-labs/eddytor-skills.git
+```
+
+**Option C: Copy specific skills** (if you only need a few)
+
+```bash
+# Example: copy just the querying and data-import skills
+cp -r eddytor-skills/skills/eddytor-querying skills/
+cp -r eddytor-skills/skills/eddytor-data-import skills/
+```
+
+### How auto-discovery works
+
+At startup, your agent scans the project for `SKILL.md` files and reads only the `name` and `description` from each. When a task matches a skill's description, the agent loads the full instructions. No manual invocation needed — the agent picks the right skill automatically.
+
+This works across 30+ tools including Claude Code, Cursor, VS Code / Copilot, Gemini CLI, Goose, OpenHands, and more. See [agentskills.io](https://agentskills.io) for the full list.
 
 ## Claude Code slash commands
 
-This repo includes pre-built slash commands in `.claude/commands/`. After cloning, you get commands like `/eddytor-getting-started`, `/eddytor-querying`, etc.
+This repo also includes pre-built slash commands in `.claude/commands/` for manual invocation. After cloning, you get `/eddytor-getting-started`, `/eddytor-querying`, etc.
 
 **Install into your project:**
 
 ```bash
-# Clone the repo
-git clone https://github.com/eddytor-labs/eddytor-skills.git
-
-# Symlink commands into your project
 mkdir -p .claude/commands
 for f in eddytor-skills/.claude/commands/*.md; do
   ln -s "$(pwd)/$f" .claude/commands/
@@ -109,8 +116,6 @@ for f in eddytor-skills/.claude/commands/*.md; do
   ln -s "$(pwd)/$f" ~/.claude/commands/
 done
 ```
-
-Available commands:
 
 | Command | Description |
 | --- | --- |
