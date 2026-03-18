@@ -147,4 +147,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on adding or modifying ski
 
 ## License
 
-This project is licensed under the MIT License with the Commons Clause — free to use, modify, and share, but not to sell. See [LICENSE](LICENSE) for details.
+This project is licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) — free to use, share, and adapt with attribution, but not for commercial purposes. See [LICENSE](LICENSE) for details.
