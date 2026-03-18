@@ -1,12 +1,15 @@
-```yaml
+---
 name: eddytor-optimization
 description: >
-  Use this skill when the user wants to improve Eddytor table read performance,
-  compact files, clean up storage, or diagnose slow queries. Also use when the
-  user mentions "optimize", "compact", "vacuum", "performance", "slow queries",
-  "storage cleanup", or "table maintenance" — even if they don't explicitly say
-  "optimization."
-```
+  Optimizes Eddytor table performance by compacting files, cleaning up storage,
+  and diagnosing slow queries. Activates for optimization, compaction, vacuum,
+  performance issues, slow queries, storage cleanup, or table maintenance — even
+  without the word "optimization."
+license: CC-BY-NC-4.0
+metadata:
+  author: eddytor
+  version: "1.0"
+---
 
 # Table Optimization & Maintenance
 

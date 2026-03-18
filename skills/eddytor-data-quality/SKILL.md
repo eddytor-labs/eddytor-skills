@@ -1,13 +1,15 @@
-```yaml
+---
 name: eddytor-data-quality
 description: >
-  Use this skill when the user wants to enforce data quality rules, set allowed
-  values on columns, validate constraints, profile data distributions, find
-  domain violations, or clean dirty data in Eddytor. Also use when the user
-  mentions "data quality", "validation", "allowed values", "constraints",
-  "profiling", "domain", or asks about anomaly detection — even if they
-  don't explicitly say "data quality."
-```
+  Enforces data quality rules in Eddytor through domain constraints, check
+  constraints, validation, and profiling. Activates for data quality, validation,
+  allowed values, constraints, profiling, domain setup, or anomaly detection —
+  even without the phrase "data quality."
+license: CC-BY-NC-4.0
+metadata:
+  author: eddytor
+  version: "1.0"
+---
 
 # Data Quality
 
@@ -26,7 +28,7 @@ Use for: category → subcategory, country → region.
 **Reference** (foreign key): `domain_type: "reference"`, `source_table: "eddytor.cfg_xxx.abc123_customers"`, `source_column: "customer_id"`
 Use for: cross-table referential integrity. Source column must already have a domain.
 
-For detailed hierarchy setup patterns, see the domain-hierarchies skill.
+For detailed hierarchy setup patterns, see the [eddytor-domain-hierarchies](../eddytor-domain-hierarchies/SKILL.md) skill.
 
 ## Validation procedure (run after every bulk mutation)
 

@@ -1,12 +1,15 @@
-```yaml
+---
 name: eddytor-querying
 description: >
-  Use this skill when the user wants to read, filter, sort, aggregate, or
-  analyze data in Eddytor tables. Also use when the user mentions "query",
-  "select", "filter", "search rows", "find records", "count", "sum",
-  "average", "group by", "SQL", "join", or wants to answer questions about
-  what's in their data — even if they don't explicitly say "query."
-```
+  Reads, filters, sorts, aggregates, and analyzes data in Eddytor tables using
+  query_rows, aggregate, and execute_sql. Activates for queries, filters, search,
+  counts, sums, averages, group by, SQL, joins, or data exploration — even
+  without the word "query."
+license: CC-BY-NC-4.0
+metadata:
+  author: eddytor
+  version: "1.0"
+---
 
 # Querying Data
 

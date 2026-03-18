@@ -1,12 +1,15 @@
-```yaml
+---
 name: eddytor-version-control
 description: >
-  Use this skill when the user wants to view table history, undo changes, rollback
-  to a previous version, restore to a point in time, or check the audit log in
-  Eddytor. Also use when the user mentions "version history", "rollback", "undo",
-  "restore", "time travel", "audit log", "what changed", "revert", or "previous
-  version" — even if they don't explicitly say "version control."
-```
+  Inspects table history, diffs versions, rolls back changes, restores to
+  timestamps, and queries audit logs in Eddytor. Activates for version history,
+  rollback, undo, restore, time travel, audit log, diffs, reverts, or previous
+  versions — even without the phrase "version control."
+license: CC-BY-NC-4.0
+metadata:
+  author: eddytor
+  version: "1.0"
+---
 
 # Version Control & Time Travel
 

@@ -1,11 +1,15 @@
-```yaml
+---
 name: eddytor-getting-started
 description: >
-  Use this skill when the user connects to Eddytor for the first time, needs help
-  with MCP setup or authentication, or asks how to get started. Also use when the
-  user mentions Eddytor onboarding, wants to understand the workspace, or needs to
-  create their first table — even if they don't explicitly say "getting started."
-```
+  Onboards new users to the Eddytor MDM platform via MCP connection,
+  authentication, and first table creation. Activates for Eddytor onboarding,
+  MCP setup, workspace exploration, or first table creation — even without the
+  phrase "getting started."
+license: CC-BY-NC-4.0
+metadata:
+  author: eddytor
+  version: "1.0"
+---
 
 # Getting Started with Eddytor
 
@@ -21,8 +25,6 @@ For Cursor, add to `.cursor/mcp.json`:
 ```json
 { "mcpServers": { "eddytor": { "url": "https://mcp.eddytor.com/mcp" } } }
 ```
-
-For other providers, use `schemas/mcp-tools.json` to register tools as function-calling definitions.
 
 ## First interaction
 

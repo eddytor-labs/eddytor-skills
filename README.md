@@ -6,23 +6,23 @@ A library of LLM skills and MCP tool guidance for working with the [Eddytor](htt
 
 ## What are skills?
 
-Skills are prompt-based instruction sets that teach any LLM how to use Eddytor effectively via its MCP endpoint. They encode best practices, workflows, and patterns — the knowledge layer that makes LLMs productive with Eddytor.
+Skills follow the open [Agent Skills](https://agentskills.io) format — a standard supported by Claude Code, Cursor, VS Code, Gemini CLI, and 30+ other agent products. Each skill is a folder containing a `SKILL.md` file with YAML frontmatter and markdown instructions that agents discover and activate automatically.
 
 ## Repository structure
 
 ```
 eddytor-skills/
-├── skills/                          # Individual skill definitions
-│   ├── getting-started/SKILL.md     # Onboarding: connect, auth, first table
-│   ├── table-management/SKILL.md    # Create, schema design, column types
-│   ├── data-import/SKILL.md         # CSV import, schema inference
-│   ├── data-quality/SKILL.md        # Constraints, validation, profiling
-│   ├── querying/SKILL.md            # query_rows, execute_sql, aggregation
-│   ├── domain-hierarchies/SKILL.md  # Fixed, hierarchical, reference domains
-│   ├── version-control/SKILL.md     # History, diff, rollback, restore
-│   ├── bulk-operations/SKILL.md     # Merge, batch insert/update/delete
-│   ├── migration/SKILL.md           # From Excel, MDS, SQL databases
-│   └── optimization/SKILL.md        # Compact, vacuum, performance
+├── skills/                                    # Individual skill definitions (Agent Skills format)
+│   ├── eddytor-getting-started/SKILL.md       # Onboarding: connect, auth, first table
+│   ├── eddytor-table-management/SKILL.md      # Create, schema design, column types
+│   ├── eddytor-data-import/SKILL.md           # CSV import, schema inference
+│   ├── eddytor-data-quality/SKILL.md          # Constraints, validation, profiling
+│   ├── eddytor-querying/SKILL.md              # query_rows, execute_sql, aggregation
+│   ├── eddytor-domain-hierarchies/SKILL.md    # Fixed, hierarchical, reference domains
+│   ├── eddytor-version-control/SKILL.md       # History, diff, rollback, restore
+│   ├── eddytor-bulk-operations/SKILL.md       # Merge, batch insert/update/delete
+│   ├── eddytor-migration/SKILL.md             # From Excel, MDS, SQL databases
+│   └── eddytor-optimization/SKILL.md          # Compact, vacuum, performance
 │
 ├── guides/                          # Cross-cutting references
 │   ├── mcp-tool-reference.md        # Complete MCP tool catalog
@@ -75,7 +75,7 @@ See [guides/provider-setup/generic.md](guides/provider-setup/generic.md) for set
 
 ## How to use skills
 
-Each skill is a standalone markdown file in `skills/<topic>/SKILL.md`. You can:
+Each skill follows the [Agent Skills specification](https://agentskills.io/specification) — a folder with a `SKILL.md` file containing `---` YAML frontmatter. You can:
 
 1. **Reference directly** — point your LLM at a specific skill file when working on that topic
 2. **Include in system prompts** — paste skill content into your LLM's context for domain expertise
