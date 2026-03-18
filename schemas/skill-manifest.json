@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "eddytor-skills",
+  "version": "1.0.0",
+  "description": "Skill manifest for Eddytor MCP tool guidance",
+  "skills": [
+    {
+      "id": "eddytor-getting-started",
+      "name": "Getting Started with Eddytor",
+      "path": "skills/getting-started/SKILL.md",
+      "category": "onboarding",
+      "triggers": ["getting started", "onboarding", "connect", "first table", "setup", "MCP setup", "authentication"],
+      "tools": ["list_tables", "get_table_schema", "get_table_metadata", "query_rows"]
+    },
+    {
+      "id": "eddytor-table-management",
+      "name": "Table Management",
+      "path": "skills/table-management/SKILL.md",
+      "category": "core",
+      "triggers": ["create table", "add column", "schema design", "column types", "primary key", "data types", "rename table", "move table"],
+      "tools": ["create_table", "add_column", "update_column_settings", "rename_table", "move_table", "get_table_schema", "get_table_metadata"]
+    },
+    {
+      "id": "eddytor-data-import",
+      "name": "Data Import",
+      "path": "skills/data-import/SKILL.md",
+      "category": "core",
+      "triggers": ["CSV import", "load data", "upload data", "infer schema", "import", "type detection", "delimiter"],
+      "tools": ["infer_schema", "import_csv", "profile_table", "validate_constraints", "validate_domain_values"]
+    },
+    {
+      "id": "eddytor-data-quality",
+      "name": "Data Quality",
+      "path": "skills/data-quality/SKILL.md",
+      "category": "core",
+      "triggers": ["data quality", "validation", "allowed values", "constraints", "profiling", "domain", "anomaly detection"],
+      "tools": ["set_column_domain", "get_allowed_values", "delete_column_domain", "validate_constraints", "validate_domain_values", "profile_table"]
+    },
+    {
+      "id": "eddytor-querying",
+      "name": "Querying Data",
+      "path": "skills/querying/SKILL.md",
+      "category": "core",
+      "triggers": ["query", "select", "filter", "search rows", "find records", "count", "sum", "average", "group by", "SQL", "join"],
+      "tools": ["query_rows", "aggregate", "execute_sql", "get_table_schema", "profile_table"]
+    },
+    {
+      "id": "eddytor-domain-hierarchies",
+      "name": "Domain Hierarchies",
+      "path": "skills/domain-hierarchies/SKILL.md",
+      "category": "advanced",
+      "triggers": ["allowed values", "enum", "dropdown", "hierarchy", "parent-child", "lookup", "foreign key", "domain constraint"],
+      "tools": ["set_column_domain", "get_allowed_values", "delete_column_domain", "validate_domain_values"]
+    },
+    {
+      "id": "eddytor-version-control",
+      "name": "Version Control & Time Travel",
+      "path": "skills/version-control/SKILL.md",
+      "category": "advanced",
+      "triggers": ["version history", "rollback", "undo", "restore", "time travel", "audit log", "what changed", "revert", "previous version", "diff"],
+      "tools": ["get_table_history", "diff_table_versions", "rollback_table", "restore_table", "get_audit_log"]
+    },
+    {
+      "id": "eddytor-bulk-operations",
+      "name": "Bulk Operations",
+      "path": "skills/bulk-operations/SKILL.md",
+      "category": "core",
+      "triggers": ["bulk insert", "batch update", "upsert", "merge rows", "mass delete", "sync data", "update records"],
+      "tools": ["merge_rows", "insert_rows", "delete_rows", "validate_constraints", "validate_domain_values"]
+    },
+    {
+      "id": "eddytor-migration",
+      "name": "Migration from External Systems",
+      "path": "skills/migration/SKILL.md",
+      "category": "workflow",
+      "triggers": ["migration", "move data from", "replace MDS", "move from Excel", "import from database", "ETL", "switch to Eddytor"],
+      "tools": ["infer_schema", "import_csv", "create_table", "set_column_domain", "validate_constraints", "validate_domain_values", "profile_table"]
+    },
+    {
+      "id": "eddytor-optimization",
+      "name": "Table Optimization & Maintenance",
+      "path": "skills/optimization/SKILL.md",
+      "category": "maintenance",
+      "triggers": ["optimize", "compact", "vacuum", "performance", "slow queries", "storage cleanup", "table maintenance"],
+      "tools": ["optimize_table", "vacuum_table", "profile_table", "get_table_history"]
+    }
+  ],
+  "guides": [
+    {
+      "id": "eddytor-mcp-tool-reference",
+      "name": "MCP Tool Reference",
+      "path": "guides/mcp-tool-reference.md",
+      "triggers": ["what tools", "tool list", "parameters", "how do I call"]
+    }
+  ]
+}
