@@ -59,7 +59,10 @@ validate_constraints(table)
 
 Returns:
 - Row 004: `name` is NULL (violates NOT NULL)
-- Row 003: `price` is 0, row 004: `price` is -5 (if price > 0 constraint exists)
+- Row 003: `price` is 0, row 004: `price` is -5 — **only if** a `price > 0` check
+  constraint exists. `import_csv` does not create check constraints; add one when you
+  create the table (`create_table` `constraints=[...]`) or via the REST/CLI constraint
+  API. Without it, `validate_constraints` checks only PK uniqueness + NOT NULL.
 
 ## 6. Fix with merge_rows
 
