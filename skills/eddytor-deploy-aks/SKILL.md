@@ -76,25 +76,34 @@ Engine requests ~1 CPU / 2Gi and server ~200m / 512Mi (×2 each by default), so 
 
 ### Managed Postgres (production)
 
+Read the admin password into a shell variable instead of typing it as a flag — a
+password on the command line leaks into shell history and the process list (`ps`):
+
 ```bash
+read -rs PGADMIN_PW    # prompts without echoing; or source it from a secret manager
+
 az postgres flexible-server create \
-  --resource-group eddytor-rg --name eddytor-pg --location westeurope \
-  --admin-user eddytor --admin-password '<STRONG_PASSWORD>' \
+  --resource-group "$RG" --name eddytor-pg --location "$REGION" \
+  --admin-user eddytor --admin-password "$PGADMIN_PW" \
   --tier Burstable --sku-name Standard_B2s \
   --version 16 --storage-size 32 --database-name eddytor \
-  --public-access 0.0.0.0    # demo: allow Azure services. Prefer VNet/Private Link for prod.
+  --public-access 0.0.0.0    # Azure-services sentinel (NOT 0.0.0.0/0); use VNet/Private Link for prod
 ```
 
 Azure requires TLS, so the conn string **must** end with `?sslmode=require`, and the host
 is the FQDN Azure prints (`eddytor-pg.postgres.database.azure.com`). Put it in the secret
-that eddytor-deploy-helm creates, and pass `--set waitForDb.enabled=true`:
+that eddytor-deploy-helm creates (reusing `$PGADMIN_PW` so the password never appears as a
+literal in history), and pass `--set waitForDb.enabled=true`:
 
 ```bash
 kubectl -n eddytor create secret generic eddytor-secrets \
-  --from-literal=EDDYTOR_DATABASE_URL="postgres://eddytor:<STRONG_PASSWORD>@eddytor-pg.postgres.database.azure.com:5432/eddytor?sslmode=require" \
+  --from-literal=EDDYTOR_DATABASE_URL="postgres://eddytor:${PGADMIN_PW}@eddytor-pg.postgres.database.azure.com:5432/eddytor?sslmode=require" \
   --from-literal=EDDYTOR_ENCRYPTION_KEY="$(openssl rand -base64 32)" \
   --from-literal=EDDYTOR_API_KEY_SECRET="$(openssl rand -base64 32)"
+unset PGADMIN_PW
 ```
+
+For production prefer **Microsoft Entra (Azure AD) auth** over a static admin password.
 
 ### Object store — Azure Blob (after install)
 

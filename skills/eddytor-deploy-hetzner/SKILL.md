@@ -38,10 +38,11 @@ the Hetzner-specific deltas: cluster, controllers, Postgres, object store, LB.
 Provisions a full k3s cluster on Hetzner Cloud servers from one config file.
 
 ```bash
-export HCLOUD_TOKEN=<your-hetzner-cloud-api-token>
+read -rs HCLOUD_TOKEN && export HCLOUD_TOKEN   # avoid putting the token in shell history
 # cluster_config.yaml lists location, server types, master/worker pools, SSH key
 hetzner-k3s create --config cluster_config.yaml
 export KUBECONFIG=./kubeconfig
+# unset HCLOUD_TOKEN when done provisioning
 ```
 
 Plain-server alternative: create hcloud servers and bootstrap with `k3sup install`.

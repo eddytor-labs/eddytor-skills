@@ -63,8 +63,9 @@ Flight and returns `pyarrow.Table`.
 
 * **Read-only.** Flight SQL does not write — table DML (insert/update/merge/delete) is the
   gRPC path. Use the CLI (`insert`/`merge`), the SDK, or MCP write tools instead.
-* **Go through 8082, not 50052.** The engine port is internal and unauthenticated at the
-  network edge; the server's 8082 proxy is where the bearer token is validated.
+* **Go through 8082, not 50052.** The engine's 50052 is internal and must **never** be
+  exposed to the network — the server's 8082 proxy is where the bearer token is validated.
+  Keep the engine on a ClusterIP / private network behind the server.
 * **Same auth + permissions as REST** — a token/key only sees what its role (∩ key scope)
   allows; expired access tokens fail the handshake (re-auth or use an API key).
 * **Quote SQL identifiers** per component: `"catalog"."schema"."table"` (double quotes), and

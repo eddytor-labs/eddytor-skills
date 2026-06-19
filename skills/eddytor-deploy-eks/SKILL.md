@@ -99,6 +99,10 @@ eksctl create iamserviceaccount --cluster eddytor --namespace eddytor \
   --approve --override-existing-serviceaccounts
 ```
 
+`AmazonS3FullAccess` is shown for brevity — it is **over-broad for production**. Scope a
+custom policy to the specific bucket(s) Eddytor uses (`s3:GetObject`/`PutObject`/
+`DeleteObject`/`ListBucket` on `arn:aws:s3:::your-bucket[/*]`) and attach that instead.
+
 Then register the bucket with **register_s3_storage** (no keys needed — the pod
 assumes the role). See **eddytor-storage-registration** for that tool's parameters.
 

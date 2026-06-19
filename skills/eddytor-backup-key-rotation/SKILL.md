@@ -82,7 +82,8 @@ kubectl -n eddytor exec deploy/eddytor-server -- \
 docker compose exec eddytor-server eddytoradm create-api-key --email you@example.com
 # Or just sign in again — the magic link is re-requestable:
 eddytor login
-# With SMTP unset, the link is in the logs:
+# Dev/fallback only — with SMTP unset, the single-use link is printed to the logs.
+# Treat server logs as sensitive (they carry login links); configure SMTP in production.
 docker compose logs --tail 50 eddytor-server | grep -i 'sign in to eddytor'
 ```
 
