@@ -19,6 +19,24 @@ and first-admin provisioning — follow it for all of those and only apply the G
 specifics below. Install from the OCI chart `oci://ghcr.io/nordalf/charts/eddytor`;
 never clone or build.
 
+## Gather inputs first (prompt the user — never assume)
+
+Before creating anything, **ask the operator** (use AskUserQuestion) and use their
+answers in every command. The names below are examples, not defaults. Confirm:
+
+- **Project** (`gcloud config get-value project`) and **region/zone**.
+- **Autopilot vs Standard** (Autopilot manages nodes; Standard needs a node pool).
+- **Cluster name** (example `eddytor`).
+- **Node size + count** (Standard only).
+- **Networking — which VPC, if any:**
+  - *Use an existing VPC:* pass `--network <vpc>` and `--subnetwork <subnet>` (VPC-native).
+    Pick this to reach Cloud SQL over **private IP** or to fit an existing topology.
+  - *Default network:* omit those flags.
+  - *Private nodes?* add `--enable-private-nodes` (and plan master-authorized networks).
+- **Kubernetes namespace** (example `eddytor`).
+
+Only proceed once these are settled — the operator owns what gets created.
+
 ## Default procedure
 
 1. Create/get a cluster, then fetch credentials (below).
@@ -35,15 +53,18 @@ never clone or build.
 ### Cluster (Autopilot recommended)
 
 ```bash
+# Substitute the project/name/region/network the operator chose above.
 # Autopilot — Google manages nodes; Workload Identity is on by default
-gcloud container clusters create-auto eddytor --region=europe-west1
+gcloud container clusters create-auto "$CLUSTER" --region="$REGION"
+  # existing VPC: --network "$VPC" --subnetwork "$SUBNET"
 
 # OR a Standard cluster with an explicit node pool + Workload Identity
-gcloud container clusters create eddytor --region=europe-west1 \
-  --num-nodes=2 --machine-type=e2-standard-4 \
-  --workload-pool=PROJECT_ID.svc.id.goog
+gcloud container clusters create "$CLUSTER" --region="$REGION" \
+  --num-nodes="$NODES" --machine-type="$MACHINE" \
+  --workload-pool="$PROJECT_ID.svc.id.goog"
+  # existing VPC: --network "$VPC" --subnetwork "$SUBNET"
 
-gcloud container clusters get-credentials eddytor --region=europe-west1
+gcloud container clusters get-credentials "$CLUSTER" --region="$REGION"
 kubectl create namespace eddytor
 ```
 
@@ -138,11 +159,6 @@ gcloud container clusters delete eddytor --region=europe-west1
 
 * **Cloud SQL for production, bundled only for throwaway eval.** For eval that
   must stay on bundled Postgres, apply the caps patch above.
-* Allowed chart flags only: `secrets.existingSecret`, `postgres.bundled`,
-  `postgres.password`, `waitForDb.enabled`, `garage.bundled`, `config.publicUrl`,
-  `config.cookieDomain`, `ingress.enabled`, `ingress.host`, `ingress.className`,
-  `ingress.tls`, `server.service.type`, `server.replicas`, `engine.replicas`,
-  `engine.autoscaling.enabled`, `ui.enabled`, `ui.origin`, `ui.service.type`.
 * Prefer Workload Identity to mounted GCS keys — fewer secrets to rotate.
 * Optional web UI runs on its own origin: `--set ui.enabled=true --set ui.origin=<url>`
   (expose with its own `ui.service.type` LoadBalancer/ingress).

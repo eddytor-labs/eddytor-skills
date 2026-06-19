@@ -19,6 +19,24 @@ it for those. This skill only covers what differs on AWS: cluster creation, RDS,
 S3 via IRSA, and ALB/NLB ingress. Install from the OCI chart
 (`oci://ghcr.io/nordalf/charts/eddytor`), never clone or build.
 
+## Gather inputs first (prompt the user — never assume)
+
+Before creating anything, **ask the operator** (use AskUserQuestion) and use their
+answers in every command. The names below are examples, not defaults. Confirm:
+
+- **AWS account / profile** (`aws sts get-caller-identity`) and **region**.
+- **Cluster name** (example `eddytor`).
+- **Node type + count** (and managed vs self-managed node group).
+- **Networking — which VPC, if any:**
+  - *Let eksctl create a new VPC* (default, simplest), or
+  - *Use existing subnets:* pass `--vpc-private-subnets`/`--vpc-public-subnets` with
+    subnet IDs (or a ClusterConfig file). Required to land in an existing VPC / shared
+    networking, and to reach an RDS instance in that VPC.
+  - *Endpoint access:* public, private, or both (`--vpc-private-access` / public access CIDRs).
+- **Kubernetes namespace** (example `eddytor`).
+
+Only proceed once these are settled — the operator owns what gets created.
+
 ## Default procedure
 
 1. Create the cluster (`eksctl create cluster`) with the OIDC provider enabled for IRSA.
@@ -35,9 +53,11 @@ S3 via IRSA, and ALB/NLB ingress. Install from the OCI chart
 Create the cluster (provisions VPC + a managed node group) and enable IRSA:
 
 ```bash
-eksctl create cluster --name eddytor --region eu-west-1 \
-  --nodes 3 --node-type m5.large --with-oidc
-aws eks update-kubeconfig --name eddytor --region eu-west-1
+# Substitute the name/region/node type/network the operator chose above.
+eksctl create cluster --name "$CLUSTER" --region "$REGION" \
+  --nodes "$NODES" --node-type "$NODE_TYPE" --with-oidc
+  # existing VPC: --vpc-private-subnets subnet-aaa,subnet-bbb --vpc-public-subnets subnet-ccc,subnet-ddd
+aws eks update-kubeconfig --name "$CLUSTER" --region "$REGION"
 ```
 
 `--with-oidc` associates the IAM OIDC provider — required for IRSA. On an

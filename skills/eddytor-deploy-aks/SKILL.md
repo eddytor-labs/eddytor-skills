@@ -22,6 +22,26 @@ Install from the OCI chart only (`oci://ghcr.io/nordalf/charts/eddytor`); never 
 Needs `az`, `kubectl`, `helm` ≥ 3.8, `openssl`, and a subscription that can create
 resource groups + AKS clusters.
 
+## Gather inputs first (prompt the user — never assume)
+
+Before creating anything, **ask the operator** (use AskUserQuestion) and thread their
+answers through every command. The names below are examples, not defaults — do not
+hardcode them. Confirm:
+
+- **Subscription** (`az account list -o table` → `az account set`) and **region**.
+- **Resource group** name (example `eddytor-rg`) — new or existing.
+- **Cluster name** (example `eddytor-aks`); optionally the **node resource group** name.
+- **Node size + count** (and whether to autoscale the node pool).
+- **Networking — which VNet, if any:**
+  - *Use an existing VNet/subnet:* pass `--vnet-subnet-id <subnet-resource-id>` (and
+    choose the network plugin, e.g. `--network-plugin azure`). Required for hub-spoke,
+    private-endpoint, or peered topologies.
+  - *Let AKS create one:* omit the subnet flag (kubenet/managed VNet).
+  - *Private API server?* add `--enable-private-cluster`.
+- **Kubernetes namespace** (example `eddytor`).
+
+Only proceed once these are settled — the operator owns what gets created.
+
 ## Default procedure
 
 1. Create the cluster (resource group → `az aks create` → `get-credentials`).
@@ -39,12 +59,15 @@ resource groups + AKS clusters.
 ```bash
 az group create --name eddytor-rg --location westeurope
 
+# Substitute the names/sizes/network the operator chose above.
 az aks create \
-  --resource-group eddytor-rg --name eddytor-aks --location westeurope \
-  --node-count 3 --node-vm-size Standard_D4as_v4 \
+  --resource-group "$RG" --name "$CLUSTER" --location "$REGION" \
+  --node-count "$NODES" --node-vm-size "$VM_SIZE" \
   --enable-managed-identity --generate-ssh-keys
+  # existing VNet:   --vnet-subnet-id "$SUBNET_ID" --network-plugin azure
+  # private cluster: --enable-private-cluster
 
-az aks get-credentials --resource-group eddytor-rg --name eddytor-aks --overwrite-existing
+az aks get-credentials --resource-group "$RG" --name "$CLUSTER" --overwrite-existing
 kubectl get nodes        # all Ready
 ```
 
