@@ -227,6 +227,14 @@
       "category": "interfaces",
       "triggers": ["REST API", "api/v1", "HTTP integration", "bearer token", "API key", "OpenAPI", "spec", "webhook", "automation"],
       "tools": []
+    },
+    {
+      "id": "eddytor-python-sdk",
+      "name": "Python SDK Best Practices",
+      "path": "skills/eddytor-python-sdk/SKILL.md",
+      "category": "interfaces",
+      "triggers": ["Python SDK", "eddytor-sdk", "EddytorClient", "query to DataFrame", "pandas", "pyarrow", "ingest", "Python client"],
+      "tools": []
     }
   ],
   "guides": [

@@ -147,6 +147,7 @@ done
 | `/eddytor-cli` | CLI best practices: auth, verbs, `--json`, CI |
 | `/eddytor-flight-sql` | Bulk reads over Arrow Flight SQL / ADBC |
 | `/eddytor-rest-api` | REST: auth, OpenAPI, error envelope, rate limits |
+| `/eddytor-python-sdk` | Python SDK: EddytorClient, query→pandas/Arrow, ingest |
 
 ## MCP tools overview
 
