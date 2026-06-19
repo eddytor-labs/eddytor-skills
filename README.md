@@ -100,13 +100,27 @@ client runs the normal browser sign-in on first connect. See
 
 ### Step 2: Add skills to your project
 
-Skills are auto-discovered by any [Agent Skills-compatible tool](https://agentskills.io) — drop the skill folders into your project and agents find them automatically.
+Pick whichever fits your setup — all four leave you with auto-discoverable `SKILL.md` files.
 
-**Option A: `eddytor install skills`** (recommended — one command, no git)
+**Option A: `npx skills add`** (recommended — one command, any agent)
 
-The [`eddytor` CLI](https://eddytor.com/docs/cli) installs skills straight from this repo
-into `./skills/` (each as `<skill-id>/SKILL.md`, plus the guides). No clone, no auth — it
-just downloads the published markdown:
+The open [`skills` CLI](https://github.com/vercel-labs/skills) (GitHub is the registry)
+detects which agents you have — Claude Code, Cursor, Codex, Gemini CLI, Goose, OpenCode,
+and 60+ more — and installs the `SKILL.md`s into each one's skills directory for you:
+
+```bash
+npx skills add eddytor-labs/eddytor-skills                      # interactive: pick skills, agents, scope
+npx skills add eddytor-labs/eddytor-skills --skill eddytor-querying   # just one
+npx skills add eddytor-labs/eddytor-skills -g -y                # all skills, global, non-interactive
+```
+
+It copies (or symlinks) into the detected agent dir (e.g. `.claude/skills/`) and writes a
+`skills-lock.json`. Note: it installs the skills only — for the `guides/` use Option B.
+
+**Option B: `eddytor install skills`** (no Node; first-party; pulls the guides too)
+
+The [`eddytor` CLI](https://eddytor.com/docs/cli) downloads straight from this repo into
+`./skills/` (each as `<skill-id>/SKILL.md`, plus `guides/`). No clone, no auth:
 
 ```bash
 eddytor get skills                              # list all available skills
@@ -115,15 +129,13 @@ eddytor install skills --skill eddytor-querying # or just one
 eddytor install skills --path .agent/skills     # custom target directory
 ```
 
-Re-run `eddytor install skills` to pull the latest versions.
-
-**Option B: Git submodule** (stays in sync via `git submodule update --remote`)
+**Option C: Git submodule** (stays in sync via `git submodule update --remote`)
 
 ```bash
 git submodule add https://github.com/eddytor-labs/eddytor-skills.git eddytor-skills
 ```
 
-**Option C: Clone or copy** (grab everything, or just the skills you need)
+**Option D: Clone or copy** (grab everything, or just the skills you need)
 
 ```bash
 git clone https://github.com/eddytor-labs/eddytor-skills.git
@@ -136,6 +148,11 @@ cp -r eddytor-skills/skills/eddytor-querying skills/
 At startup, your agent scans the project for `SKILL.md` files and reads only the `name` and `description` from each. When a task matches a skill's description, the agent loads the full instructions. No manual invocation needed — the agent picks the right skill automatically.
 
 This works across 30+ tools including Claude Code, Cursor, VS Code / Copilot, Gemini CLI, Goose, OpenHands, and more. See [agentskills.io](https://agentskills.io) for the full list.
+
+**Chat assistants (ChatGPT, Gemini app, Mistral Le Chat, claude.ai):** these don't scan a
+project folder, so the installers above don't apply. Connect the MCP endpoint (Step 1) for
+the tools, and supply a skill as context the product's own way — a Custom GPT's
+instructions, a Gemini Gem, a Project's files, claude.ai's Skills, or the system prompt.
 
 ## MCP tools overview
 
