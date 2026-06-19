@@ -144,6 +144,9 @@ done
 | `/eddytor-provider-oauth` | Per-org Azure/Google delegated-storage OAuth apps |
 | `/eddytor-observability` | OTLP traces + metrics, log levels |
 | `/eddytor-backup-key-rotation` | Backups + encryption/API-key/signing-key rotation |
+| `/eddytor-cli` | CLI best practices: auth, verbs, `--json`, CI |
+| `/eddytor-flight-sql` | Bulk reads over Arrow Flight SQL / ADBC |
+| `/eddytor-rest-api` | REST: auth, OpenAPI, error envelope, rate limits |
 
 ## MCP tools overview
 

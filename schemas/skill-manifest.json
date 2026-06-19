@@ -203,6 +203,30 @@
       "category": "admin",
       "triggers": ["backup", "restore", "disaster recovery", "key rotation", "rotate secrets", "encryption key", "API key secret", "lost admin key"],
       "tools": []
+    },
+    {
+      "id": "eddytor-cli",
+      "name": "CLI Best Practices",
+      "path": "skills/eddytor-cli/SKILL.md",
+      "category": "interfaces",
+      "triggers": ["CLI", "eddytor command", "terminal", "scripting", "CI", "eddytor login", "eddytor get", "--json"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-flight-sql",
+      "name": "Flight SQL Best Practices",
+      "path": "skills/eddytor-flight-sql/SKILL.md",
+      "category": "interfaces",
+      "triggers": ["Flight SQL", "ADBC", "Arrow", "bulk export", "large result set", "BI tool", "Tableau", "Power BI", "pandas"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-rest-api",
+      "name": "REST API Best Practices",
+      "path": "skills/eddytor-rest-api/SKILL.md",
+      "category": "interfaces",
+      "triggers": ["REST API", "api/v1", "HTTP integration", "bearer token", "API key", "OpenAPI", "spec", "webhook", "automation"],
+      "tools": []
     }
   ],
   "guides": [
