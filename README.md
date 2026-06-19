@@ -133,6 +133,13 @@ done
 | `/eddytor-object-store` | List, upload, download, move objects |
 | `/eddytor-table-lifecycle` | Rename, move, drop, share tables |
 | `/eddytor-zero-to-table` | End-to-end: storage → table → domains → validate |
+| `/eddytor-deploy-helm` | Install on any Kubernetes via the OCI Helm chart |
+| `/eddytor-deploy-aks` | Deploy on Azure AKS |
+| `/eddytor-deploy-gke` | Deploy on Google GKE |
+| `/eddytor-deploy-eks` | Deploy on AWS EKS |
+| `/eddytor-deploy-hetzner` | Deploy on Hetzner k3s (budget) |
+| `/eddytor-deploy-compose` | Single-host Docker Compose |
+| `/eddytor-deploy-object-store` | Choose + wire the backing object store |
 
 ## MCP tools overview
 

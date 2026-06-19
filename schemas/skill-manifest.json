@@ -115,6 +115,62 @@
       "category": "workflow",
       "triggers": ["set up from scratch", "first table", "onboard dataset", "get started", "I have a CSV", "from nothing"],
       "tools": ["register_s3_storage", "list_storage_configs", "infer_schema", "import_csv", "create_table", "set_column_domain", "get_allowed_values", "validate_constraints", "validate_domain_values", "profile_table"]
+    },
+    {
+      "id": "eddytor-deploy-helm",
+      "name": "Deploy with Helm (any Kubernetes)",
+      "path": "skills/eddytor-deploy-helm/SKILL.md",
+      "category": "deployment",
+      "triggers": ["deploy", "kubernetes", "helm", "install eddytor", "self-host", "ingress", "external postgres", "scale engine", "OCI chart"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-aks",
+      "name": "Deploy on Azure AKS",
+      "path": "skills/eddytor-deploy-aks/SKILL.md",
+      "category": "deployment",
+      "triggers": ["AKS", "Azure Kubernetes", "az aks", "deploy on Azure", "Azure Database for PostgreSQL", "Azure Blob", "vCPU quota"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-gke",
+      "name": "Deploy on Google GKE",
+      "path": "skills/eddytor-deploy-gke/SKILL.md",
+      "category": "deployment",
+      "triggers": ["GKE", "Google Kubernetes Engine", "gcloud", "deploy on GCP", "Cloud SQL", "GCS", "Workload Identity"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-eks",
+      "name": "Deploy on AWS EKS",
+      "path": "skills/eddytor-deploy-eks/SKILL.md",
+      "category": "deployment",
+      "triggers": ["EKS", "Elastic Kubernetes Service", "eksctl", "deploy on AWS", "RDS", "S3", "IRSA"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-hetzner",
+      "name": "Deploy on Hetzner (k3s)",
+      "path": "skills/eddytor-deploy-hetzner/SKILL.md",
+      "category": "deployment",
+      "triggers": ["Hetzner", "k3s", "hetzner-k3s", "budget self-host", "hcloud", "cheap kubernetes"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-compose",
+      "name": "Deploy with Docker Compose (single host)",
+      "path": "skills/eddytor-deploy-compose/SKILL.md",
+      "category": "deployment",
+      "triggers": ["docker compose", "single host", "one VM", "get.eddytor.dev", "no kubernetes", "self-host simple"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-object-store",
+      "name": "Wire the Object Store",
+      "path": "skills/eddytor-deploy-object-store/SKILL.md",
+      "category": "deployment",
+      "triggers": ["backing store", "where does eddytor store data", "bundled garage", "S3 for production", "object store setup", "deploy storage"],
+      "tools": ["register_s3_storage", "register_az_storage", "register_gcs_storage", "list_storage_configs"]
     }
   ],
   "guides": [
