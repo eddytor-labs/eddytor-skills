@@ -1,67 +1,20 @@
 # Eddytor Skills
 
-A library of LLM skills and MCP tool guidance for working with the [Eddytor](https://eddytor.com) master data management platform.
+LLM skills and MCP tool guidance for the [Eddytor](https://eddytor.com) master data management platform — plain-markdown [Agent Skills](https://agentskills.io) that work with Claude Code, Cursor, Codex, Gemini CLI, and any other Agent Skills-compatible tool.
 
-**Provider-agnostic** — skills are plain markdown that works with Claude, OpenAI, Gemini, Cursor, and any other LLM.
+## Quick start
 
-## What are skills?
+```bash
+# 1. Point your agent at your Eddytor server's MCP endpoint (the tools).
+#    Self-hosted: https://<your-eddytor-host>/mcp   ·   Eddytor Cloud: https://mcp.eddytor.com/mcp
+claude mcp add eddytor --transport streamable-http https://<your-eddytor-host>/mcp
 
-Skills follow the open [Agent Skills](https://agentskills.io) format — a standard supported by Claude Code, Cursor, VS Code, Gemini CLI, and 30+ other agent products. Each skill is a folder containing a `SKILL.md` file with YAML frontmatter and markdown instructions that agents discover and activate automatically.
-
-## Repository structure
-
+# 2. Install the skills (the guidance) into whatever agent you use.
+npx skills add eddytor-labs/eddytor-skills
 ```
-eddytor-skills/
-├── skills/                                 # 29 skills (Agent Skills format), grouped by area:
-│   │ ── Data & MDM ──
-│   ├── eddytor-getting-started/            # Onboarding: connect, auth, first table
-│   ├── eddytor-zero-to-table/              # End-to-end: storage → table → domains → validate
-│   ├── eddytor-table-management/           # Create, schema design, column types
-│   ├── eddytor-table-lifecycle/            # Rename, move, drop, share tables
-│   ├── eddytor-data-import/                # CSV import, schema inference
-│   ├── eddytor-data-quality/               # Constraints, validation, profiling
-│   ├── eddytor-domain-hierarchies/         # Fixed, hierarchical, reference domains
-│   ├── eddytor-querying/                   # query_rows, execute_sql, aggregation
-│   ├── eddytor-bulk-operations/            # Merge, batch insert/update/delete
-│   ├── eddytor-version-control/            # History, diff, rollback, restore
-│   ├── eddytor-optimization/               # Compact, vacuum, performance
-│   ├── eddytor-migration/                  # From Excel, MDS, SQL databases
-│   ├── eddytor-storage-registration/       # Connect S3 / Azure / GCS storage
-│   ├── eddytor-object-store/               # List, upload, download, move objects
-│   │ ── Deployment ──
-│   ├── eddytor-deploy-helm/                # Any Kubernetes via the OCI Helm chart
-│   ├── eddytor-deploy-aks/                 # Azure AKS
-│   ├── eddytor-deploy-gke/                 # Google GKE
-│   ├── eddytor-deploy-eks/                 # AWS EKS
-│   ├── eddytor-deploy-hetzner/             # Hetzner k3s (budget)
-│   ├── eddytor-deploy-compose/             # Single-host Docker Compose
-│   ├── eddytor-deploy-object-store/        # Choose + wire the backing object store
-│   │ ── Admin & ops ──
-│   ├── eddytor-access-control/             # Roles, API keys, OAuth clients, audit
-│   ├── eddytor-provider-oauth/             # Per-org Azure/Google delegated-storage apps
-│   ├── eddytor-observability/              # OTLP traces + metrics, log levels
-│   ├── eddytor-backup-key-rotation/        # Backups + secret / key rotation
-│   │ ── Interfaces ──
-│   ├── eddytor-cli/                        # eddytor CLI best practices
-│   ├── eddytor-flight-sql/                 # Bulk reads over Arrow Flight SQL
-│   ├── eddytor-rest-api/                   # REST: auth, OpenAPI, errors, rate limits
-│   └── eddytor-python-sdk/                 # eddytor-sdk: query → pandas / Arrow
-│   (each is a folder with a SKILL.md)
-│
-├── guides/                          # Cross-cutting references
-│   ├── mcp-tool-reference.md        # Complete MCP tool catalog
-│   └── provider-setup/              # Per-provider setup instructions
-│       ├── claude.md
-│       ├── cursor.md
-│       └── generic.md
-│
-├── examples/                        # Real-world workflow examples
-│   ├── product-catalog-setup.md
-│   └── data-cleanup-workflow.md
-│
-└── schemas/                         # Machine-readable metadata
-    └── skill-manifest.json          # Registry of all skills
-```
+
+That's it — your agent now has Eddytor's 45 MCP tools plus 29 auto-discovered skills. The
+rest of this page expands on each step, lists the skills, and documents the tools.
 
 ## Installation
 
@@ -143,16 +96,64 @@ git clone https://github.com/eddytor-labs/eddytor-skills.git
 cp -r eddytor-skills/skills/eddytor-querying skills/
 ```
 
-### How auto-discovery works
+## How skills work
 
-At startup, your agent scans the project for `SKILL.md` files and reads only the `name` and `description` from each. When a task matches a skill's description, the agent loads the full instructions. No manual invocation needed — the agent picks the right skill automatically.
-
-This works across 30+ tools including Claude Code, Cursor, VS Code / Copilot, Gemini CLI, Goose, OpenHands, and more. See [agentskills.io](https://agentskills.io) for the full list.
+Each skill is a folder with a `SKILL.md` — YAML frontmatter (`name` + `description`)
+followed by markdown instructions. At startup your agent scans the project for `SKILL.md`
+files, reads only the `name` and `description` from each, and loads the full instructions
+when a task matches the description. No manual invocation — the agent picks the right skill
+automatically. This works across 30+ tools including Claude Code, Cursor, VS Code / Copilot,
+Gemini CLI, Goose, and OpenHands. See [agentskills.io](https://agentskills.io) for the list.
 
 **Chat assistants (ChatGPT, Gemini app, Mistral Le Chat, claude.ai):** these don't scan a
 project folder, so the installers above don't apply. Connect the MCP endpoint (Step 1) for
 the tools, and supply a skill as context the product's own way — a Custom GPT's
 instructions, a Gemini Gem, a Project's files, claude.ai's Skills, or the system prompt.
+
+## Skills
+
+29 skills, grouped by area. Browse them under [`skills/`](skills/); install with Step 2.
+
+**Data & MDM**
+
+- `eddytor-getting-started` — onboarding: connect, auth, first table
+- `eddytor-zero-to-table` — end-to-end: storage → table → domains → validate
+- `eddytor-table-management` — create tables, schema design, column types
+- `eddytor-table-lifecycle` — rename, move, drop, share tables
+- `eddytor-data-import` — CSV import, schema inference
+- `eddytor-data-quality` — constraints, validation, profiling
+- `eddytor-domain-hierarchies` — fixed, hierarchical, reference domains
+- `eddytor-querying` — `query_rows`, `execute_sql`, aggregation
+- `eddytor-bulk-operations` — merge, batch insert/update/delete
+- `eddytor-version-control` — history, diff, rollback, restore
+- `eddytor-optimization` — compact, vacuum, performance
+- `eddytor-migration` — from Excel, MDS, SQL databases
+- `eddytor-storage-registration` — connect S3 / Azure / GCS storage
+- `eddytor-object-store` — list, upload, download, move objects
+
+**Deployment**
+
+- `eddytor-deploy-helm` — any Kubernetes via the OCI Helm chart
+- `eddytor-deploy-aks` — Azure AKS
+- `eddytor-deploy-gke` — Google GKE
+- `eddytor-deploy-eks` — AWS EKS
+- `eddytor-deploy-hetzner` — Hetzner k3s (budget)
+- `eddytor-deploy-compose` — single-host Docker Compose
+- `eddytor-deploy-object-store` — choose + wire the backing object store
+
+**Admin & ops**
+
+- `eddytor-access-control` — roles, API keys, OAuth clients, audit
+- `eddytor-provider-oauth` — per-org Azure/Google delegated-storage apps
+- `eddytor-observability` — OTLP traces + metrics, log levels
+- `eddytor-backup-key-rotation` — backups + secret / key rotation
+
+**Interfaces**
+
+- `eddytor-cli` — `eddytor` CLI best practices
+- `eddytor-flight-sql` — bulk reads over Arrow Flight SQL
+- `eddytor-rest-api` — REST: auth, OpenAPI, errors, rate limits
+- `eddytor-python-sdk` — `eddytor-sdk`: query → pandas / Arrow
 
 ## MCP tools overview
 
@@ -171,6 +172,18 @@ Eddytor exposes 45 MCP tools across these categories:
 | Maintenance | `optimize_table`, `vacuum_table` |
 | Storage configs | `register_s3_storage`, `register_az_storage`, `register_gcs_storage`, `list_storage_configs`, `update_storage_config`, `delete_storage_config` |
 | Object store | `list_objects`, `download_object`, `upload_object`, `delete_object`, `create_folder`, `move_objects`, `create_demo_table` |
+
+Full parameter details: [guides/mcp-tool-reference.md](guides/mcp-tool-reference.md).
+
+## Repository layout
+
+```
+eddytor-skills/
+├── skills/      # one folder per skill, each a SKILL.md (Agent Skills format)
+├── guides/      # cross-cutting references: mcp-tool-reference.md + provider-setup/
+├── examples/    # worked end-to-end workflows
+└── schemas/     # skill-manifest.json — machine-readable registry of all skills
+```
 
 ## Contributing
 
