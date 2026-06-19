@@ -24,7 +24,7 @@ Always start with `infer_schema`. Skipping it means type surprises after import.
 
 ## `infer_schema` — preview before committing
 
-Returns column names, Arrow types, auto-detected delimiter, and **domain candidates** (low-cardinality string columns with distinct values listed).
+Returns row count, column names, Arrow types (with nullability), and **domain candidates** (low-cardinality string columns with distinct values listed). The delimiter is auto-detected internally for parsing but is not part of the response.
 
 Review the output. Common adjustments:
 

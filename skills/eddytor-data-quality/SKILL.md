@@ -22,8 +22,8 @@ Use `set_column_domain`. Three types — pick the one that fits:
 **Fixed** (enum): `domain_type: "fixed"`, `values: ["active", "inactive", "draft"]`
 Use for: status codes, country codes, any finite value set.
 
-**Hierarchical** (parent-child): `domain_type: "hierarchical"`, `parent_column: "category"`, `hierarchy: { "Electronics": ["Phones", "Laptops"], ... }`
-Use for: category → subcategory, country → region.
+**Hierarchical** (parent-child): `domain_type: "hierarchical"`, `parent_column: "category"`, `hierarchy: { "<parent-value-uuid>": ["Phones", "Laptops"], ... }`
+Use for: category → subcategory, country → region. The `hierarchy` map is keyed by the parent value's UUID (read it via `get_allowed_values(table, "category")`), not the parent string — see [eddytor-domain-hierarchies](../eddytor-domain-hierarchies/SKILL.md).
 
 **Reference** (foreign key): `domain_type: "reference"`, `source_table: "eddytor.cfg_xxx.abc123_customers"`, `source_column: "customer_id"`
 Use for: cross-table referential integrity. Source column must already have a domain.
@@ -43,7 +43,7 @@ For detailed hierarchy setup patterns, see the [eddytor-domain-hierarchies](../e
 * Domain values are **case-sensitive** — `"Active"` and `"active"` are different values.
 * Hierarchical domains: set the parent column's domain **first**, then the child.
 * Reference domains are **live** — deleting a value from the source table can orphan references in dependent tables. Use `validate_domain_values` to find orphans.
-* `delete_column_domain` with `force: true` removes the constraint regardless of existing data — use with caution.
+* `delete_column_domain` removes the constraint even when values are in use, but **fails if a dependent domain** (hierarchical child or cross-table reference) still points at it — remove the dependent domain first. There is no `force` flag.
 * `validate_domain_values` returns similarity suggestions but doesn't auto-fix. Use `merge_rows` to apply corrections.
 
 ## Identifying domain candidates

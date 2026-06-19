@@ -32,14 +32,22 @@ set_column_domain(table, "status", "fixed", values=["active", "discontinued", "d
 set_column_domain(table, "category", "fixed",
   values=["Electronics", "Clothing", "Home & Garden", "Food & Beverage"])
 
-# Subcategory: hierarchical domain linked to category
+# Subcategory: hierarchical domain linked to category.
+# The hierarchy is keyed by each parent value's UUID, so first read the
+# category domain's value IDs:
+get_allowed_values(table, "category")
+# -> [{ "id": "a1b2c3d4-...", "value": "Electronics" },
+#     { "id": "c3d4e5f6-...", "value": "Clothing" },
+#     { "id": "e5f6a7b8-...", "value": "Home & Garden" },
+#     { "id": "b8c9d0e1-...", "value": "Food & Beverage" }]
+
 set_column_domain(table, "subcategory", "hierarchical",
   parent_column="category",
   hierarchy={
-    "Electronics": ["Phones", "Laptops", "Accessories"],
-    "Clothing": ["Shirts", "Pants", "Outerwear"],
-    "Home & Garden": ["Furniture", "Tools", "Lighting"],
-    "Food & Beverage": ["Snacks", "Drinks", "Fresh"]
+    "a1b2c3d4-...": ["Phones", "Laptops", "Accessories"],
+    "c3d4e5f6-...": ["Shirts", "Pants", "Outerwear"],
+    "e5f6a7b8-...": ["Furniture", "Tools", "Lighting"],
+    "b8c9d0e1-...": ["Snacks", "Drinks", "Fresh"]
   })
 ```
 

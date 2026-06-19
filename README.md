@@ -43,7 +43,7 @@ eddytor-skills/
 
 ### Step 1: Connect to Eddytor's MCP endpoint
 
-This gives your agent access to Eddytor's 28 MCP tools.
+This gives your agent access to Eddytor's 45 MCP tools.
 
 **Claude Desktop / claude.ai** — add to your MCP config:
 
@@ -132,12 +132,12 @@ done
 
 ## MCP tools overview
 
-Eddytor exposes 28 MCP tools across these categories:
+Eddytor exposes 45 MCP tools across these categories:
 
 | Category | Tools |
 | --- | --- |
-| Discovery | `list_tables`, `get_table_schema`, `get_table_metadata`, `profile_table` |
-| Creation | `create_table`, `add_column`, `update_column_settings`, `rename_table`, `move_table` |
+| Discovery | `list_tables`, `resolve_table`, `get_table_schema`, `get_table_metadata`, `profile_table`, `get_share_link` |
+| Creation & lifecycle | `create_table`, `add_column`, `update_column_settings`, `rename_table`, `move_table`, `drop_table` |
 | Reading | `query_rows`, `aggregate`, `execute_sql` |
 | Writing | `insert_rows`, `merge_rows`, `delete_rows` |
 | Import | `infer_schema`, `import_csv` |
@@ -145,6 +145,8 @@ Eddytor exposes 28 MCP tools across these categories:
 | Validation | `validate_constraints`, `validate_domain_values` |
 | History | `get_table_history`, `diff_table_versions`, `rollback_table`, `restore_table`, `get_audit_log` |
 | Maintenance | `optimize_table`, `vacuum_table` |
+| Storage configs | `register_s3_storage`, `register_az_storage`, `register_gcs_storage`, `list_storage_configs`, `update_storage_config`, `delete_storage_config` |
+| Object store | `list_objects`, `download_object`, `upload_object`, `delete_object`, `create_folder`, `move_objects`, `create_demo_table` |
 
 ## Contributing
 

@@ -35,7 +35,9 @@ Use `create_table`. At least one column must have `is_primary_key: true`.
 
 ### Supported data types
 
-`Utf8`, `Int32`, `Int64`, `Float64`, `Boolean`, `Date32`, `Timestamp`
+`Utf8` (aka `String`/`Text`), `Int8`, `Int16`, `Int32` (`Int`/`Integer`), `Int64` (`Long`/`BigInt`), `Float16`, `Float32` (`Float`), `Float64` (`Double`), `Boolean` (`Bool`), `Date32` (`Date`), `Date64`, `Timestamp` (`DateTime`), `Time32` (`Time`), `Time64`, `Duration`, `Binary` (`Bytes`), `LargeUtf8` (`LargeString`), `LargeBinary`.
+
+Type names are case-insensitive and the aliases in parentheses are accepted. For MDM, prefer `Utf8` for IDs (preserves leading zeros) and `Float64` for money.
 
 ## Procedure: schema introspection before any change
 

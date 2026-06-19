@@ -27,18 +27,34 @@ set_column_domain(table, "category", "fixed", values=["Electronics", "Clothing",
 
 **Step 2 — Second level: hierarchical domain**
 
+The `hierarchy` mapping is keyed by the parent value's **UUID**, not the parent
+string. So first read the parent (`category`) domain's value IDs, then build the
+mapping from those UUIDs to allowed child values:
+
 ```
+# 1. read the parent domain's value IDs
+get_allowed_values(table, "category")
+# -> [{ "id": "a1b2c3d4-...", "value": "Electronics" },
+#     { "id": "c3d4e5f6-...", "value": "Clothing" }, ...]
+
+# 2. key the hierarchy by those UUIDs
 set_column_domain(table, "subcategory", "hierarchical",
   parent_column="category",
-  hierarchy={ "Electronics": ["Phones", "Laptops"], "Clothing": ["Shirts", "Pants"], ... })
+  hierarchy={ "a1b2c3d4-...": ["Phones", "Laptops"],
+              "c3d4e5f6-...": ["Shirts", "Pants"] })
 ```
 
 **Step 3 — Third level: another hierarchical domain**
 
+Same pattern — read the `subcategory` value IDs, then map them to their children:
+
 ```
+get_allowed_values(table, "subcategory")
+# -> [{ "id": "e5f6a7b8-...", "value": "Phones" }, ...]
+
 set_column_domain(table, "product_type", "hierarchical",
   parent_column="subcategory",
-  hierarchy={ "Phones": ["Smartphone", "Feature Phone"], "Laptops": ["Ultrabook", "Gaming"], ... })
+  hierarchy={ "e5f6a7b8-...": ["Smartphone", "Feature Phone"] })
 ```
 
 Always set parent domains before child domains.
@@ -56,9 +72,9 @@ The source column **must already have a domain configured**.
 
 ## Inspecting domains
 
-* `get_allowed_values(table, "status")` → flat list for fixed domains
-* `get_allowed_values(table, "subcategory", parent_value="Electronics")` → children for hierarchical
-* `delete_column_domain(table, column, force=true)` → removes constraint
+* `get_allowed_values(table, "status")` → flat `[{ id, value }]` list for fixed domains
+* `get_allowed_values(table, "subcategory", parent_value="Electronics")` → children for a given parent
+* `delete_column_domain(table, column)` → removes the constraint
 
 ## Validation loop after setting domains
 
@@ -70,7 +86,8 @@ The source column **must already have a domain configured**.
 
 * Parent column's domain must be set **before** creating a hierarchical child domain.
 * If a parent value changes, the child must be valid for the new parent — otherwise the merge is rejected.
+* `hierarchy` keys are parent-value **UUIDs**, not the parent strings — read them with `get_allowed_values(table, parent_column)` first. A string key fails with `Invalid hierarchy format`.
 * The `hierarchy` parameter in `set_column_domain` **replaces** the entire mapping — include all parent-child pairs, not just new ones.
 * Reference domains validate **live** against the source table. Deleting source values orphans dependent rows.
 * Domain values are **case-sensitive**: `"Active"` ≠ `"active"`.
-* `delete_column_domain` without `force: true` fails if values are in use.
+* `delete_column_domain` removes the constraint even when values are in use, but **fails if a dependent domain** (a hierarchical child or a cross-table reference) still points at it — remove the child/reference first.
