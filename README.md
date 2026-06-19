@@ -65,52 +65,70 @@ eddytor-skills/
 
 ## Installation
 
-### Step 1: Connect to Eddytor's MCP endpoint
+### Step 1: Connect to your Eddytor MCP endpoint
 
-This gives your agent access to Eddytor's 45 MCP tools.
+This gives your agent access to Eddytor's 45 MCP tools. Eddytor serves MCP at
+**`/mcp` on your own server**, so use the URL where your Eddytor is reachable:
+
+- **Self-hosted:** `https://<your-eddytor-host>/mcp` (your server's public URL — e.g.
+  `https://eddytor.example.com/mcp`, or `http://localhost:8080/mcp` when port-forwarding).
+- **Eddytor Cloud:** `https://mcp.eddytor.com/mcp`.
+
+Substitute that URL below (`https://<your-eddytor-host>/mcp`):
 
 **Claude Desktop / claude.ai** — add to your MCP config:
 
 ```json
-{ "mcpServers": { "eddytor": { "url": "https://mcp.eddytor.com/mcp" } } }
+{ "mcpServers": { "eddytor": { "url": "https://<your-eddytor-host>/mcp" } } }
 ```
 
 **Cursor** — add to `.cursor/mcp.json`:
 
 ```json
-{ "mcpServers": { "eddytor": { "url": "https://mcp.eddytor.com/mcp" } } }
+{ "mcpServers": { "eddytor": { "url": "https://<your-eddytor-host>/mcp" } } }
 ```
 
 **Claude Code:**
 
 ```bash
-claude mcp add eddytor --transport streamable-http https://mcp.eddytor.com/mcp
+claude mcp add eddytor --transport streamable-http https://<your-eddytor-host>/mcp
 ```
 
-See [guides/provider-setup/](guides/provider-setup/) for other providers.
+The endpoint authenticates against your server's own OAuth (it's the IdP), so your MCP
+client runs the normal browser sign-in on first connect. See
+[guides/provider-setup/](guides/provider-setup/) for other providers.
 
 ### Step 2: Add skills to your project
 
-Skills are auto-discovered by any [Agent Skills-compatible tool](https://agentskills.io). Just add the skill folders to your project and agents find them automatically.
+Skills are auto-discovered by any [Agent Skills-compatible tool](https://agentskills.io) — drop the skill folders into your project and agents find them automatically.
 
-**Option A: Git submodule** (recommended — stays in sync with updates)
+**Option A: `eddytor install skills`** (recommended — one command, no git)
+
+The [`eddytor` CLI](https://eddytor.com/docs/cli) installs skills straight from this repo
+into `./skills/` (each as `<skill-id>/SKILL.md`, plus the guides). No clone, no auth — it
+just downloads the published markdown:
+
+```bash
+eddytor get skills                              # list all available skills
+eddytor install skills                          # install all of them into ./skills/
+eddytor install skills --skill eddytor-querying # or just one
+eddytor install skills --path .agent/skills     # custom target directory
+```
+
+Re-run `eddytor install skills` to pull the latest versions.
+
+**Option B: Git submodule** (stays in sync via `git submodule update --remote`)
 
 ```bash
 git submodule add https://github.com/eddytor-labs/eddytor-skills.git eddytor-skills
 ```
 
-**Option B: Clone directly**
+**Option C: Clone or copy** (grab everything, or just the skills you need)
 
 ```bash
 git clone https://github.com/eddytor-labs/eddytor-skills.git
-```
-
-**Option C: Copy specific skills** (if you only need a few)
-
-```bash
-# Example: copy just the querying and data-import skills
+# or copy individual skills:
 cp -r eddytor-skills/skills/eddytor-querying skills/
-cp -r eddytor-skills/skills/eddytor-data-import skills/
 ```
 
 ### How auto-discovery works
