@@ -171,6 +171,38 @@
       "category": "deployment",
       "triggers": ["backing store", "where does eddytor store data", "bundled garage", "S3 for production", "object store setup", "deploy storage"],
       "tools": ["register_s3_storage", "register_az_storage", "register_gcs_storage", "list_storage_configs"]
+    },
+    {
+      "id": "eddytor-access-control",
+      "name": "Access Control",
+      "path": "skills/eddytor-access-control/SKILL.md",
+      "category": "admin",
+      "triggers": ["roles", "permissions", "API key", "access control", "OAuth client", "who can do what", "eddytoradm", "audit log"],
+      "tools": ["get_audit_log"]
+    },
+    {
+      "id": "eddytor-provider-oauth",
+      "name": "Provider OAuth Apps",
+      "path": "skills/eddytor-provider-oauth/SKILL.md",
+      "category": "admin",
+      "triggers": ["provider OAuth app", "delegated storage access", "Azure app registration", "Google OAuth client", "connect Azure with OAuth", "provider_apps"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-observability",
+      "name": "Observability",
+      "path": "skills/eddytor-observability/SKILL.md",
+      "category": "admin",
+      "triggers": ["telemetry", "OpenTelemetry", "OTLP", "metrics", "tracing", "logs", "log level", "monitoring", "collector"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-backup-key-rotation",
+      "name": "Backup & Key Rotation",
+      "path": "skills/eddytor-backup-key-rotation/SKILL.md",
+      "category": "admin",
+      "triggers": ["backup", "restore", "disaster recovery", "key rotation", "rotate secrets", "encryption key", "API key secret", "lost admin key"],
+      "tools": []
     }
   ],
   "guides": [

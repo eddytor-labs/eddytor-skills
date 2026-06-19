@@ -140,6 +140,10 @@ done
 | `/eddytor-deploy-hetzner` | Deploy on Hetzner k3s (budget) |
 | `/eddytor-deploy-compose` | Single-host Docker Compose |
 | `/eddytor-deploy-object-store` | Choose + wire the backing object store |
+| `/eddytor-access-control` | Roles, API keys, OAuth clients, audit log |
+| `/eddytor-provider-oauth` | Per-org Azure/Google delegated-storage OAuth apps |
+| `/eddytor-observability` | OTLP traces + metrics, log levels |
+| `/eddytor-backup-key-rotation` | Backups + encryption/API-key/signing-key rotation |
 
 ## MCP tools overview
 

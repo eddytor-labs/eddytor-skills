@@ -44,7 +44,7 @@ EDDYTOR__SERVER__PUBLIC_URL=https://eddytor.example.com
 4. Provision the first admin inside the server container:
 
 ```bash
-docker compose exec server eddytoradm setup --email you@example.com --org "Your Org"
+docker compose exec eddytor-server eddytoradm setup --email you@example.com --org "Your Org"
 ```
 
 ## Optional web UI
