@@ -83,6 +83,38 @@
       "category": "maintenance",
       "triggers": ["optimize", "compact", "vacuum", "performance", "slow queries", "storage cleanup", "table maintenance"],
       "tools": ["optimize_table", "vacuum_table", "profile_table", "get_table_history"]
+    },
+    {
+      "id": "eddytor-storage-registration",
+      "name": "Storage Registration",
+      "path": "skills/eddytor-storage-registration/SKILL.md",
+      "category": "core",
+      "triggers": ["connect storage", "register bucket", "register container", "S3", "MinIO", "Azure Blob", "OneLake", "GCS", "storage config", "credentials", "where tables live"],
+      "tools": ["register_s3_storage", "register_az_storage", "register_gcs_storage", "list_storage_configs", "update_storage_config", "delete_storage_config"]
+    },
+    {
+      "id": "eddytor-object-store",
+      "name": "Object Store",
+      "path": "skills/eddytor-object-store/SKILL.md",
+      "category": "core",
+      "triggers": ["list files", "upload", "download", "delete object", "folder", "move objects", "browse bucket", "demo table"],
+      "tools": ["list_objects", "download_object", "upload_object", "delete_object", "create_folder", "move_objects", "create_demo_table", "list_storage_configs"]
+    },
+    {
+      "id": "eddytor-table-lifecycle",
+      "name": "Table Lifecycle",
+      "path": "skills/eddytor-table-lifecycle/SKILL.md",
+      "category": "core",
+      "triggers": ["rename table", "move table", "relocate", "delete table", "drop table", "share link", "resolve table"],
+      "tools": ["rename_table", "move_table", "drop_table", "resolve_table", "get_share_link", "list_tables"]
+    },
+    {
+      "id": "eddytor-zero-to-table",
+      "name": "Zero to Table",
+      "path": "skills/eddytor-zero-to-table/SKILL.md",
+      "category": "workflow",
+      "triggers": ["set up from scratch", "first table", "onboard dataset", "get started", "I have a CSV", "from nothing"],
+      "tools": ["register_s3_storage", "list_storage_configs", "infer_schema", "import_csv", "create_table", "set_column_domain", "get_allowed_values", "validate_constraints", "validate_domain_values", "profile_table"]
     }
   ],
   "guides": [

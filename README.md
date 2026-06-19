@@ -129,6 +129,10 @@ done
 | `/eddytor-bulk-operations` | Merge, batch insert/update/delete |
 | `/eddytor-migration` | From Excel, MDS, SQL databases |
 | `/eddytor-optimization` | Compact, vacuum, performance |
+| `/eddytor-storage-registration` | Connect S3/Azure/GCS, discovery, configs |
+| `/eddytor-object-store` | List, upload, download, move objects |
+| `/eddytor-table-lifecycle` | Rename, move, drop, share tables |
+| `/eddytor-zero-to-table` | End-to-end: storage → table → domains → validate |
 
 ## MCP tools overview
 
