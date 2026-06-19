@@ -43,7 +43,7 @@ eddytor-skills/
 
 ### Step 1: Connect to Eddytor's MCP endpoint
 
-This gives your agent access to Eddytor's 28 MCP tools.
+This gives your agent access to Eddytor's 45 MCP tools.
 
 **Claude Desktop / claude.ai** — add to your MCP config:
 
@@ -129,15 +129,34 @@ done
 | `/eddytor-bulk-operations` | Merge, batch insert/update/delete |
 | `/eddytor-migration` | From Excel, MDS, SQL databases |
 | `/eddytor-optimization` | Compact, vacuum, performance |
+| `/eddytor-storage-registration` | Connect S3/Azure/GCS, discovery, configs |
+| `/eddytor-object-store` | List, upload, download, move objects |
+| `/eddytor-table-lifecycle` | Rename, move, drop, share tables |
+| `/eddytor-zero-to-table` | End-to-end: storage → table → domains → validate |
+| `/eddytor-deploy-helm` | Install on any Kubernetes via the OCI Helm chart |
+| `/eddytor-deploy-aks` | Deploy on Azure AKS |
+| `/eddytor-deploy-gke` | Deploy on Google GKE |
+| `/eddytor-deploy-eks` | Deploy on AWS EKS |
+| `/eddytor-deploy-hetzner` | Deploy on Hetzner k3s (budget) |
+| `/eddytor-deploy-compose` | Single-host Docker Compose |
+| `/eddytor-deploy-object-store` | Choose + wire the backing object store |
+| `/eddytor-access-control` | Roles, API keys, OAuth clients, audit log |
+| `/eddytor-provider-oauth` | Per-org Azure/Google delegated-storage OAuth apps |
+| `/eddytor-observability` | OTLP traces + metrics, log levels |
+| `/eddytor-backup-key-rotation` | Backups + encryption/API-key/signing-key rotation |
+| `/eddytor-cli` | CLI best practices: auth, verbs, `--json`, CI |
+| `/eddytor-flight-sql` | Bulk reads over Arrow Flight SQL / ADBC |
+| `/eddytor-rest-api` | REST: auth, OpenAPI, error envelope, rate limits |
+| `/eddytor-python-sdk` | Python SDK: EddytorClient, query→pandas/Arrow, ingest |
 
 ## MCP tools overview
 
-Eddytor exposes 28 MCP tools across these categories:
+Eddytor exposes 45 MCP tools across these categories:
 
 | Category | Tools |
 | --- | --- |
-| Discovery | `list_tables`, `get_table_schema`, `get_table_metadata`, `profile_table` |
-| Creation | `create_table`, `add_column`, `update_column_settings`, `rename_table`, `move_table` |
+| Discovery | `list_tables`, `resolve_table`, `get_table_schema`, `get_table_metadata`, `profile_table`, `get_share_link` |
+| Creation & lifecycle | `create_table`, `add_column`, `update_column_settings`, `rename_table`, `move_table`, `drop_table` |
 | Reading | `query_rows`, `aggregate`, `execute_sql` |
 | Writing | `insert_rows`, `merge_rows`, `delete_rows` |
 | Import | `infer_schema`, `import_csv` |
@@ -145,6 +164,8 @@ Eddytor exposes 28 MCP tools across these categories:
 | Validation | `validate_constraints`, `validate_domain_values` |
 | History | `get_table_history`, `diff_table_versions`, `rollback_table`, `restore_table`, `get_audit_log` |
 | Maintenance | `optimize_table`, `vacuum_table` |
+| Storage configs | `register_s3_storage`, `register_az_storage`, `register_gcs_storage`, `list_storage_configs`, `update_storage_config`, `delete_storage_config` |
+| Object store | `list_objects`, `download_object`, `upload_object`, `delete_object`, `create_folder`, `move_objects`, `create_demo_table` |
 
 ## Contributing
 

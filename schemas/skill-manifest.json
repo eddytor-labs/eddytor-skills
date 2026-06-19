@@ -83,6 +83,158 @@
       "category": "maintenance",
       "triggers": ["optimize", "compact", "vacuum", "performance", "slow queries", "storage cleanup", "table maintenance"],
       "tools": ["optimize_table", "vacuum_table", "profile_table", "get_table_history"]
+    },
+    {
+      "id": "eddytor-storage-registration",
+      "name": "Storage Registration",
+      "path": "skills/eddytor-storage-registration/SKILL.md",
+      "category": "core",
+      "triggers": ["connect storage", "register bucket", "register container", "S3", "MinIO", "Azure Blob", "OneLake", "GCS", "storage config", "credentials", "where tables live"],
+      "tools": ["register_s3_storage", "register_az_storage", "register_gcs_storage", "list_storage_configs", "update_storage_config", "delete_storage_config"]
+    },
+    {
+      "id": "eddytor-object-store",
+      "name": "Object Store",
+      "path": "skills/eddytor-object-store/SKILL.md",
+      "category": "core",
+      "triggers": ["list files", "upload", "download", "delete object", "folder", "move objects", "browse bucket", "demo table"],
+      "tools": ["list_objects", "download_object", "upload_object", "delete_object", "create_folder", "move_objects", "create_demo_table", "list_storage_configs"]
+    },
+    {
+      "id": "eddytor-table-lifecycle",
+      "name": "Table Lifecycle",
+      "path": "skills/eddytor-table-lifecycle/SKILL.md",
+      "category": "core",
+      "triggers": ["rename table", "move table", "relocate", "delete table", "drop table", "share link", "resolve table"],
+      "tools": ["rename_table", "move_table", "drop_table", "resolve_table", "get_share_link", "list_tables"]
+    },
+    {
+      "id": "eddytor-zero-to-table",
+      "name": "Zero to Table",
+      "path": "skills/eddytor-zero-to-table/SKILL.md",
+      "category": "workflow",
+      "triggers": ["set up from scratch", "first table", "onboard dataset", "get started", "I have a CSV", "from nothing"],
+      "tools": ["register_s3_storage", "list_storage_configs", "infer_schema", "import_csv", "create_table", "set_column_domain", "get_allowed_values", "validate_constraints", "validate_domain_values", "profile_table"]
+    },
+    {
+      "id": "eddytor-deploy-helm",
+      "name": "Deploy with Helm (any Kubernetes)",
+      "path": "skills/eddytor-deploy-helm/SKILL.md",
+      "category": "deployment",
+      "triggers": ["deploy", "kubernetes", "helm", "install eddytor", "self-host", "ingress", "external postgres", "scale engine", "OCI chart"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-aks",
+      "name": "Deploy on Azure AKS",
+      "path": "skills/eddytor-deploy-aks/SKILL.md",
+      "category": "deployment",
+      "triggers": ["AKS", "Azure Kubernetes", "az aks", "deploy on Azure", "Azure Database for PostgreSQL", "Azure Blob", "vCPU quota"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-gke",
+      "name": "Deploy on Google GKE",
+      "path": "skills/eddytor-deploy-gke/SKILL.md",
+      "category": "deployment",
+      "triggers": ["GKE", "Google Kubernetes Engine", "gcloud", "deploy on GCP", "Cloud SQL", "GCS", "Workload Identity"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-eks",
+      "name": "Deploy on AWS EKS",
+      "path": "skills/eddytor-deploy-eks/SKILL.md",
+      "category": "deployment",
+      "triggers": ["EKS", "Elastic Kubernetes Service", "eksctl", "deploy on AWS", "RDS", "S3", "IRSA"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-hetzner",
+      "name": "Deploy on Hetzner (k3s)",
+      "path": "skills/eddytor-deploy-hetzner/SKILL.md",
+      "category": "deployment",
+      "triggers": ["Hetzner", "k3s", "hetzner-k3s", "budget self-host", "hcloud", "cheap kubernetes"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-compose",
+      "name": "Deploy with Docker Compose (single host)",
+      "path": "skills/eddytor-deploy-compose/SKILL.md",
+      "category": "deployment",
+      "triggers": ["docker compose", "single host", "one VM", "get.eddytor.dev", "no kubernetes", "self-host simple"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-deploy-object-store",
+      "name": "Wire the Object Store",
+      "path": "skills/eddytor-deploy-object-store/SKILL.md",
+      "category": "deployment",
+      "triggers": ["backing store", "where does eddytor store data", "bundled garage", "S3 for production", "object store setup", "deploy storage"],
+      "tools": ["register_s3_storage", "register_az_storage", "register_gcs_storage", "list_storage_configs"]
+    },
+    {
+      "id": "eddytor-access-control",
+      "name": "Access Control",
+      "path": "skills/eddytor-access-control/SKILL.md",
+      "category": "admin",
+      "triggers": ["roles", "permissions", "API key", "access control", "OAuth client", "who can do what", "eddytoradm", "audit log"],
+      "tools": ["get_audit_log"]
+    },
+    {
+      "id": "eddytor-provider-oauth",
+      "name": "Provider OAuth Apps",
+      "path": "skills/eddytor-provider-oauth/SKILL.md",
+      "category": "admin",
+      "triggers": ["provider OAuth app", "delegated storage access", "Azure app registration", "Google OAuth client", "connect Azure with OAuth", "provider_apps"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-observability",
+      "name": "Observability",
+      "path": "skills/eddytor-observability/SKILL.md",
+      "category": "admin",
+      "triggers": ["telemetry", "OpenTelemetry", "OTLP", "metrics", "tracing", "logs", "log level", "monitoring", "collector"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-backup-key-rotation",
+      "name": "Backup & Key Rotation",
+      "path": "skills/eddytor-backup-key-rotation/SKILL.md",
+      "category": "admin",
+      "triggers": ["backup", "restore", "disaster recovery", "key rotation", "rotate secrets", "encryption key", "API key secret", "lost admin key"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-cli",
+      "name": "CLI Best Practices",
+      "path": "skills/eddytor-cli/SKILL.md",
+      "category": "interfaces",
+      "triggers": ["CLI", "eddytor command", "terminal", "scripting", "CI", "eddytor login", "eddytor get", "--json"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-flight-sql",
+      "name": "Flight SQL Best Practices",
+      "path": "skills/eddytor-flight-sql/SKILL.md",
+      "category": "interfaces",
+      "triggers": ["Flight SQL", "ADBC", "Arrow", "bulk export", "large result set", "BI tool", "Tableau", "Power BI", "pandas"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-rest-api",
+      "name": "REST API Best Practices",
+      "path": "skills/eddytor-rest-api/SKILL.md",
+      "category": "interfaces",
+      "triggers": ["REST API", "api/v1", "HTTP integration", "bearer token", "API key", "OpenAPI", "spec", "webhook", "automation"],
+      "tools": []
+    },
+    {
+      "id": "eddytor-python-sdk",
+      "name": "Python SDK Best Practices",
+      "path": "skills/eddytor-python-sdk/SKILL.md",
+      "category": "interfaces",
+      "triggers": ["Python SDK", "eddytor-sdk", "EddytorClient", "query to DataFrame", "pandas", "pyarrow", "ingest", "Python client"],
+      "tools": []
     }
   ],
   "guides": [
