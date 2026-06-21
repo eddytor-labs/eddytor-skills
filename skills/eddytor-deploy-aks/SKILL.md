@@ -47,8 +47,13 @@ Only proceed once these are settled — the operator owns what gets created.
 1. Create the cluster (resource group → `az aks create` → `get-credentials`).
 2. Provision Postgres — **Azure Database for PostgreSQL Flexible Server** for production
    (or `postgres.bundled=true` for evaluation, with the azuredisk caveat below).
-3. Create the secret + `helm upgrade --install` per eddytor-deploy-helm, with the
-   Azure conn string and `--set waitForDb.enabled=true` when external.
+   On the managed server, **allow-list the `citext` + `pgcrypto` extensions** before
+   first boot (Azure blocks them by default; see Managed Postgres) — otherwise
+   migration 0 fails.
+3. Create the secret + `helm upgrade --install` per eddytor-deploy-helm with the
+   Azure conn string. **Do NOT set `waitForDb.enabled=true` for an external DB**
+   (chart bug — see Gotchas); the server runs its own preflight + advisory-locked
+   migration, so the gate is unnecessary and would block boot.
 4. Verify + first admin per eddytor-deploy-helm.
 5. Register Azure Blob as the object store (see eddytor-storage-registration).
 
@@ -82,18 +87,32 @@ password on the command line leaks into shell history and the process list (`ps`
 ```bash
 read -rs PGADMIN_PW    # prompts without echoing; or source it from a secret manager
 
+# NOTE: do NOT pass --database-name here — on a standard (non-elastic) Flexible
+# Server the current az CLI rejects it ("--database-name can only be used when
+# --node-count is present"). Create the server, then add the database separately.
 az postgres flexible-server create \
   --resource-group "$RG" --name eddytor-pg --location "$REGION" \
   --admin-user eddytor --admin-password "$PGADMIN_PW" \
   --tier Burstable --sku-name Standard_B2s \
-  --version 16 --storage-size 32 --database-name eddytor \
+  --version 16 --storage-size 32 \
   --public-access 0.0.0.0    # Azure-services sentinel (NOT 0.0.0.0/0); use VNet/Private Link for prod
+
+# Create the eddytor database (flag is --name / -n, NOT --database-name).
+az postgres flexible-server db create \
+  --resource-group "$RG" --server-name eddytor-pg --name eddytor
+
+# Allow-list the extensions the migrations need — Azure blocks all extensions by
+# default, so without this migration 0 dies with "extension citext is not
+# allow-listed". Dynamic parameter, no restart needed.
+az postgres flexible-server parameter set \
+  --resource-group "$RG" --server-name eddytor-pg \
+  --name azure.extensions --value citext,pgcrypto
 ```
 
 Azure requires TLS, so the conn string **must** end with `?sslmode=require`, and the host
 is the FQDN Azure prints (`eddytor-pg.postgres.database.azure.com`). Put it in the secret
 that eddytor-deploy-helm creates (reusing `$PGADMIN_PW` so the password never appears as a
-literal in history), and pass `--set waitForDb.enabled=true`:
+literal in history). **Do not enable `waitForDb`** for this external DB (see Gotchas):
 
 ```bash
 kubectl -n eddytor create secret generic eddytor-secrets \
@@ -117,10 +136,10 @@ restate them here). For evaluation only, `--set garage.bundled=true` gives an in
 The LB IP isn't known until Azure provisions it, so install first, then reconcile the URL:
 
 ```bash
-# 1. install with the server on a LoadBalancer (per eddytor-deploy-helm Install)
+# 1. install with the server on a LoadBalancer (per eddytor-deploy-helm Install).
+#    External DB → leave waitForDb off (chart bug, see Gotchas).
 helm upgrade --install eddytor oci://ghcr.io/nordalf/charts/eddytor -n eddytor \
   --set secrets.existingSecret=eddytor-secrets \
-  --set waitForDb.enabled=true \
   --set server.service.type=LoadBalancer \
   --set config.publicUrl="http://pending:8080"
 
@@ -163,8 +182,18 @@ az group delete --name eddytor-rg --yes --no-wait
   ```
 
   Local hostPath clusters don't hit this — it's specific to real CSI volumes.
+* **`waitForDb` is broken with an external DB.** The chart's `wait-for-db` init container
+  hardcodes its probe to host `eddytor-postgres` (the *bundled* Service name) regardless of
+  `EDDYTOR_DATABASE_URL`, so with managed Postgres it loops forever (`nc: bad address
+  'eddytor-postgres'`) and the pods stay `Init`. **Leave `waitForDb.enabled=false` (the
+  default) for any external DB** — the server does its own preflight + advisory-locked
+  migration, so the gate adds nothing. Only use `waitForDb` with bundled Postgres.
+* **Azure blocks Postgres extensions by default.** The migrations need `citext` + `pgcrypto`;
+  without allow-listing them (`az postgres flexible-server parameter set --name
+  azure.extensions --value citext,pgcrypto`, see Managed Postgres) migration 0 fails with
+  `extension "citext" is not allow-listed`. Set it before first server boot.
 * **Azure Postgres needs `?sslmode=require`** in the conn string, and the AKS egress IP
-  (or VNet) must be allowed through the server firewall, or `waitForDb` blocks server boot.
+  (or VNet) must be allowed through the server firewall, or the server can't connect.
 * `config.publicUrl` (and `ui.origin`) MUST equal the address the browser actually hits, or
   OAuth redirects and cookies break — hence the two-step on the raw-IP path.
 

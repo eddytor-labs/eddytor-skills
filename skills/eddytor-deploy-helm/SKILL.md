@@ -59,9 +59,12 @@ helm upgrade --install eddytor oci://ghcr.io/nordalf/charts/eddytor -n eddytor \
 
 * **Evaluation:** `postgres.bundled=true` + `garage.bundled=true`. Single replica, no HA,
   no backups — never for data you keep.
-* **Production:** leave both false, put the external DB URL in the secret, set
-  `--set waitForDb.enabled=true`, and register a real object store after install
-  (Azure Blob / S3 / GCS — see eddytor-storage-registration).
+* **Production:** leave both false, put the external DB URL in the secret, and register a
+  real object store after install (Azure Blob / S3 / GCS — see eddytor-storage-registration).
+  **Leave `waitForDb` off for an external DB** — its init container probes the bundled
+  Service name `eddytor-postgres`, not your DB URL, so enabling it with an external DB hangs
+  the pods in `Init`. The server runs its own preflight + advisory-locked migration anyway.
+  `waitForDb` is only meaningful with bundled Postgres (where it auto-forces on).
 
 ### Reaching the server
 
