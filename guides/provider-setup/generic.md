@@ -3,7 +3,7 @@
 ## MCP endpoint
 
 ```
-URL: https://mcp.eddytor.com/mcp
+URL: http[s]://[<your_domain>|localhost]/mcp
 Auth: OAuth 2.1 (automatic for MCP-compatible clients)
 ```
 
@@ -15,7 +15,7 @@ Configure the MCP server URL in your client's settings. The exact location varie
 
 If your LLM provider uses function calling (OpenAI, Gemini, Mistral), you need an MCP-to-function-calling adapter:
 
-1. Run an MCP client that connects to `https://mcp.eddytor.com/mcp`
+1. Run an MCP client that connects to `http[s]://[<your_domain>|localhost]/mcp`
 2. Expose the MCP tools as function definitions in your provider's format
 3. Route function calls through the MCP client
 

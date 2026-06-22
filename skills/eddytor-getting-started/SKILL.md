@@ -17,13 +17,13 @@ Eddytor is an MDM platform. Interact with it through MCP tools: create tables, i
 
 ## Connecting
 
-MCP endpoint: `https://mcp.eddytor.com/mcp`
+MCP endpoint: `http[s]://[<your_domain>|localhost]/mcp`
 Auth: OAuth 2.1 (Supabase-backed), handled automatically by MCP clients.
 
 For Cursor, add to `.cursor/mcp.json`:
 
 ```json
-{ "mcpServers": { "eddytor": { "url": "https://mcp.eddytor.com/mcp" } } }
+{ "mcpServers": { "eddytor": { "url": "http[s]://[<your_domain>|localhost]/mcp" } } }
 ```
 
 ## First interaction
@@ -62,7 +62,7 @@ For Cursor, add to `.cursor/mcp.json`:
 - [ ] `list_tables` to confirm workspace access
 - [ ] `get_table_schema` on at least one table
 - [ ] Successfully `query_rows` with a filter
-- [ ] If creating: `create_table` with PK + `insert_rows` + `validate_constraints`
+- [ ] If creating: `create_table` with PK + `merge_rows` + `validate_constraints`
 
 ## Guidelines
 
