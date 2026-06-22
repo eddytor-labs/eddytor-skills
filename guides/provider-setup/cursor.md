@@ -8,7 +8,7 @@ Add to `.cursor/mcp.json` in your project root:
 {
   "mcpServers": {
     "eddytor": {
-      "url": "https://mcp.eddytor.com/mcp"
+      "url": "http[s]://[<your_domain>|localhost]/mcp"
     }
   }
 }

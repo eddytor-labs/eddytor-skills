@@ -23,7 +23,7 @@ rest of this page expands on each step, lists the skills, and documents the tool
 This gives your agent access to Eddytor's 45 MCP tools. Eddytor serves MCP at
 **`/mcp` on your own server**, so use the URL where your Eddytor is reachable:
 
-- **Self-hosted:** `https://<your-eddytor-host>/mcp` (your server's public URL — e.g.
+- **Self-hosted:** `http[s]://[<your_domain>|localhost]/mcp` (your server's public URL — e.g.
   `https://eddytor.example.com/mcp`, or `http://localhost:8080/mcp` when port-forwarding).
 - **Eddytor Cloud:** `https://mcp.eddytor.com/mcp`.
 

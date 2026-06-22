@@ -8,7 +8,7 @@ Add to your Claude Desktop MCP configuration (`~/Library/Application Support/Cla
 {
   "mcpServers": {
     "eddytor": {
-      "url": "https://mcp.eddytor.com/mcp"
+      "url": "http[s]://[<your_domain>|localhost]/mcp"
     }
   }
 }
@@ -18,14 +18,14 @@ Restart Claude Desktop. Authentication is handled automatically via OAuth 2.1 â€
 
 ## claude.ai
 
-MCP servers can be added in the claude.ai settings under the Integrations section. Add the Eddytor MCP endpoint URL: `https://mcp.eddytor.com/mcp`
+MCP servers can be added in the claude.ai settings under the Integrations section. Add the Eddytor MCP endpoint URL: `http[s]://[<your_domain>|localhost]/mcp`
 
 ## Claude Code
 
 Claude Code supports MCP servers natively. Add the server to your project configuration:
 
 ```bash
-claude mcp add eddytor --transport streamable-http https://mcp.eddytor.com/mcp
+claude mcp add eddytor --transport streamable-http http[s]://[<your_domain>|localhost]/mcp
 ```
 
 ## Verifying the connection
